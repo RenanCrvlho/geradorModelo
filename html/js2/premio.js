@@ -125,7 +125,7 @@ window.onload = () => {
             const dataHoraInicioPart = document.getElementById('data-hora-inicio-part').value;
             const dataHoraInicioPartFormatada = formatarDataHora(dataHoraInicioPart);
         
-            const dataHoraFimPart = document.getElementById('data-hora-inicio-part').value;
+            const dataHoraFimPart = document.getElementById('data-hora-fim-part').value;
             const dataHoraFimPartFormatada = formatarDataHora(dataHoraFimPart);
         
             const mecanica = document.getElementById('mecanica').value;
@@ -475,7 +475,7 @@ window.onload = () => {
                 <p><strong>Certificado de Autorização SPA/MF Nº ${certificado}</strong></p>
             `;
             
-                const novaJanela = window.open('', '', 'width=1200, height=600');
+                const novaJanela = window.open('', '', 'width=1400, height=800');
         
                 novaJanela.document.write(`
                     <html>

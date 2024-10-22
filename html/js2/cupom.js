@@ -105,12 +105,17 @@ window.onload = () => {
         const opcoesTecno = opcaoTecnologiaSelecionada.length ? opcaoTecnologiaSelecionada.join(' / ') : '';
 
         const dataInicioPromo = document.getElementById('data-inicio-promo').value;
-        const dataFimPromo = document.getElementById('data-fim-promo').value;
+        const dataInicioPromoFormatada = formatarData(dataInicioPromo);
 
-        const dataInicioPart = document.getElementById('data-inicio-part').value;
-        const horaInicioPart = document.getElementById('hora-inicio-part').value;
-        const dataFimPart = document.getElementById('data-fim-part').value;
-        const horaFimPart = document.getElementById('hora-fim-part').value;
+        const dataFimPromo = document.getElementById('data-fim-promo').value;
+        const dataFimPromoFormatada = dataFimPromo(dataFimPromo);
+
+        const dataHoraInicioPart = document.getElementById('data-hora-inicio-part').value;
+        const dataHoraInicioPartFormatada = formatarDataHora(dataHoraInicioPart);
+
+        const dataHoraFimPart = document.getElementById('data-hora-fim-part').value;
+        const dataHoraFimPartFormatada = formatarDataHora(dataHoraFimPart);
+
 
         const mecanica = document.getElementById('mecanica').value;
 
@@ -323,8 +328,8 @@ window.onload = () => {
             <p>_Tipo: ${modalidadeCampanha} - / ${opcoesTecno} /*_</p>
             <br></br>
             <p>* *Período*</p>
-            <p>** PERÍODO DA PROMOÇÃO: ${dataInicioPromo} até o dia ${dataFimPromo}.</p>
-            <p>** PERÍODO DE PARTICIPAÇÃO: ${horaInicioPart} do dia ${dataInicioPart} até às ${horaFimPart} do dia ${dataFimPart}.</p>
+            <p>** PERÍODO DA PROMOÇÃO: ${dataInicioPromoFormatada} até o dia ${dataFimPromoFormatada}.</p>
+            <p>** PERÍODO DE PARTICIPAÇÃO: do dia ${dataHoraInicioPartFormatada} até o dia ${dataHoraFimPartFormatada}.</p>
             <br></br>
             <p>* *Regra de participação:*</p>
             <ul style="padding-left: 0; margin-left: 0;">${listaOpcoesRegraRedmine}</ul>
@@ -382,8 +387,8 @@ window.onload = () => {
             <h2>${nomeShopping} - ${nomeCampanha} (${modalidadeCampanha})</h2>
             <h3><strong>Período:</strong></h3>
             <ul>
-                <li><strong>PERÍODO DA PROMOÇÃO: </strong>${dataInicioPromo} à ${dataFimPromo}.</li>
-                <li><strong>PERÍODO DE PARTICIPAÇÃO: </strong>${horaInicioPart} do dia ${dataInicioPart} até às ${horaFimPart} do dia ${dataFimPart}.</li>
+                <li><strong>PERÍODO DA PROMOÇÃO: </strong>${dataInicioPromoFormatada} até o dia ${dataFimPromoFormatada}.</li>
+                <li><strong>PERÍODO DE PARTICIPAÇÃO: </strong>${dataHoraInicioPartFormatada} até o dia ${dataHoraFimPartFormatada}.</li>
             </ul>
             <br></br>
             <h3><strong>Regra de participação:</strong></h3>
@@ -445,7 +450,7 @@ window.onload = () => {
             <p><strong>Certificado de Autorização SPA/MF Nº ${certificado}</strong></p>
         `;
 
-        const novaJanela = window.open('', '', 'width=800, height=600');
+        const novaJanela = window.open('', '', 'width=1400, height=800');
 
         novaJanela.document.write(`
             <html>
