@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelo Loteria</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans">
+    <link rel="stylesheet" href="css2/loteria.css">
+    <script src="js2/loteria.js"></script>
+</head>
+<body>
+    <div class="container-principal">
+        <form id="form-modelo">
+            <h1>CAMPANHA (LOTERIA)</h1>
+
+            <label for="nome-shopping" class="label-negrito">Nome do Shopping:</label>
+            <input type="text" id="nome-shopping" name="nome-shopping">
+
+            <label for="nome-campanha" class="label-negrito">Nome da Campanha:</label>
+            <input type="text" id="nome-campanha" name="nome-campanha">
+
+            <label for="modalidade-campanha" class="label-negrito">Modalidade(s) da Campanha:</label>
+            <input type="text" id="modalidade-campanha" name="modalidade-campanha">
+
+            <label for="opcao-tecnologia" class="label-negrito">Qual(is) tecnologia(s) será(ão) utlizada(s):</label>
+            <div>
+                <input type="checkbox" id="prizor-kiosk" name="opcao-tecnologia" value="KIOSK">
+                <label for="prizor-kiosk">KIOSK</label>
+            </div>
+            <div>
+                <input type="checkbox" id="prizor-app" name="opcao-tecnologia" value="APP">
+                <label for="prizor-app">APP</label>
+            </div>
+            <div>
+                <input type="checkbox" id="prizor-sdk" name="opcao-tecnologia" value="SDK">
+                <label for="prizor-sdk">SDK</label>
+            </div>
+            <div>
+                <input type="checkbox" id="prizor-web" name="opcao-tecnologia" value="WEB">
+                <label for="prizor-web">WEB</label>
+            </div>
+            <div>
+                <input type="checkbox" id="prizor-chatbot" name="opcao-tecnologia" value="CHATBOT">
+                <label for="prizor-chatbot">CHATBOT</label>
+            </div>
+            <div>
+                <input type="checkbox" id="4C" name="opcao-tecnologia" value="4C">
+                <label for="4C">4C</label>
+            </div>
+
+            <h2>PERÍODO DA PROMOÇÃO</h2>
+            <label for="data-inicio-promo" class="label-negrito">Data de Início da Promoção:</label>
+            <input type="date" id="data-inicio-promo" name="data-inicio-promo">
+
+            <label for="data-fim-promo" class="label-negrito">Data de Fim da Promoção:</label>
+            <input type="date" id="data-fim-promo" name="data-fim-promo">
+
+            <h2>PERÍODO DA PARTICIPAÇÃO</h2>
+            <label for="data-hora-inicio-part" class="label-negrito">Data e Hora de Início da Participação:</label>
+            <input type="datetime-local" id="data-hora-inicio-part" name="data-hora-inicio-part">    
+
+            <label for="data-hora-fim-part" class="label-negrito">Data e Hora de Fim da Participação:</label>
+            <input type="datetime-local" id="data-hora-fim-part" name="data-hora-fim-part">
+
+
+            <label for="opcao-regra" class="label-negrito">Regras de Participação:</label>
+            <div>
+                <input type="checkbox" id="pessoa-fisica" name="opcao-regra" value="Pessoas Físicas">
+                <label for="pessoa-fisica">Pessoas Físicas</label>
+            </div>
+            <div>
+                <input type="checkbox" id="maiores" name="opcao-regra" value="Maiores de 18 anos">
+                <label for="maiores">Maiores de 18 anos</label>
+            </div>
+            <div>
+                <input type="checkbox" id="residentes" name="opcao-regra" value="Residentes e domiciliados em território nacional">
+                <label for="residentes">Residentes e domiciliados em território nacional</label>
+            </div>
+            <div>
+                <input type="checkbox" id="funcionarios" name="opcao-regra" value="Funcionários não participam">
+                <label for="funcionarios">Funcionários não participam</label>
+            </div>
+
+            <label for="mecanica" class="label-negrito">Mecânica Geral:</label>
+            <textarea id="mecanica" name="mecanica"></textarea>
+
+            <label for="regra-quantidade" class="label-negrito">Regra Quantidade:</label>
+            <input type="text" id="regra-quantidade" name="regra-quantidade">
+
+            <label for="regra-extra" class="label-negrito">Regra Extra:</label>
+            <input type="text" id="regra-extra" name="regra-extra">
+
+            <label for="limite-quiosque" class="label-negrito">Limite de Notas (Quiosque):</label>
+            <input type="number" id="limite-quiosque" name="limite-quiosque">
+            <label for="limite-fast" class="label-negrito">Limite de Notas (Fast-Food):</label>
+            <input type="number" id="limite-fast" name="limite-fast">
+
+            <label for="limite-valor" class="label-negrito">Limite por Valor:</label>
+            <input type="number" id="limite-valor" name="limite-valor">
+
+            <label for="qtd-serie" class="label-negrito">Quantidade de Séries:</label>
+            <input type="text" id="qtd-serie" name="qtd-serie">
+            <label for="qtd-numero" class="label-negrito">Quantidade de Números:</label>
+            <input type="text" id="qtd-numero" name="qtd-numero">
+
+            <label for="opcao-dados" class="label-negrito">Dados Obrigatórios:</label>
+            <div>
+                <input type="checkbox" id="nome-completo" name="opcao-dados" value="Nome Completo">
+                <label for="nome-completo">Nome Completo</label>
+            </div>
+            <div>
+                <input type="checkbox" id="cpf" name="opcao-dados" value="CPF">
+                <label for="cpf">CPF</label>
+            </div>
+            <div>
+                <input type="checkbox" id="data-nasc" name="opcao-dados" value="Data de Nascimento">
+                <label for="data-nasc">Data de Nascimento</label>
+            </div>
+            <div>
+                <input type="checkbox" id="rg" name="opcao-dados" value="RG">
+                <label for="rg">RG</label>
+            </div>
+            <div>
+                <input type="checkbox" id="genero" name="opcao-dados" value="Gênero">
+                <label for="genero">Gênero</label>
+            </div>
+            <div>
+                <input type="checkbox" id="estado-civil" name="opcao-dados" value="Estado Cívil">
+                <label for="estado-civil">Estado Cívil</label>
+            </div>
+            <div>
+                <input type="checkbox" id="profissao" name="opcao-dados" value="Profissão">
+                <label for="profissao">Profissão</label>
+            </div>
+            <div>
+                <input type="checkbox" id="escolaridade" name="opcao-dados" value="Escolaridade">
+                <label for="escolaridade">Escolaridade</label>
+            </div>
+            <div>
+                <input type="checkbox" id="email-dados" name="opcao-dados" value="E-mail">
+                <label for="email-dados">E-mail</label>
+            </div>
+            <div>
+                <input type="checkbox" id="telefone-dados" name="opcao-dados" value="Telefone / Celular com DDD">
+                <label for="telefone-dados">Telefone / Celular com DDD</label>
+            </div>
+            <div>
+                <input type="checkbox" id="endereco-dados" name="opcao-dados" value="Endereço Completo (CEP, rua, número, bairro e complemento)">
+                <label for="endereco-dados">Endereço Completo (CEP, rua, número, bairro e complemento)</label>
+            </div>
+
+            <label for="opcao-enquete" class="label-negrito">Enquete:</label>
+            <div>
+                <input type="checkbox" id="enquete-padrao" name="opcao-enquete" value="Padrão">
+                <label for="enquete-padrao">Padrão</label>
+            </div>
+            <div>
+                <input type="checkbox" id="enquete-nps" name="opcao-enquete" value="NPS">
+                <label for="enquete-nps">NPS</label>
+            </div>
+            <div>
+                <input type="checkbox" id="enquete-nao" name="opcao-enquete" value="Não tem">
+                <label for="enquete-nao">Não tem</label>
+            </div>
+
+            <label for="opcao-termos" class="label-negrito">Termos LGPD:</label>
+            <div>
+                <input type="radio" id="termos-padrao" name="opcao-termos" value="Sim, padrão CRMall">
+                <label for="termos-padrao">Sim, padrão CRMall</label>
+            </div>
+            <div>
+                <input type="radio" id="termos-personalizado" name="opcao-termos" value="Sim, personalizado">
+                <label for="termos-personalizado">Sim, personalizado</label>
+            </div>
+            
+            <div id="container-data-sorteio">
+                <div class="sorteio">
+                    <label for="data-sorteio" class="label-negrito">Data(s) do(s) Sorteio(s):</label>
+                    <input type="date" id="data-sorteio" name="data-sorteio">
+                </div>
+            </div>
+
+            <button type="button" id="btn-loteria" class="add-button">Adicionar mais Datas</button>
+
+            <div id="container-spa">
+                <div class="sorteio">
+                    <label for="data-hora-relatorio" class="label-negrito">Data e Hora de Envio do Relatório SPA:</label>
+                    <input type="datetime-local" id="data-hora-relatorio" name="data-hora-relatorio">
+                </div>
+            </div>
+
+            <button type="button" id="btn-spa" class="add-button">Adicionar mais Datas</button>
+
+            <label for="opcao-bebidas" class="label-negrito">Bebidas Alcoólicas:</label>
+            <div>
+                <input type="radio" id="bebidas-sim" name="opcao-bebidas" value="Sim, todas">
+                <label for="bebidas-sim">Sim, todas</label>
+            </div>
+            <div>
+                <input type="radio" id="bebidas-decreto" name="opcao-bebidas" value="Sim, respeitando o Decreto">
+                <label for="bebidas-decreto">Sim, respeitando o Decreto</label>
+            </div>
+            <div>
+                <input type="radio" id="bebidas-nao" name="opcao-bebidas" value="Nenhum tipo">
+                <label for="bebidas-nao">Nenhum tipo</label>
+            </div>
+
+            <label for="certificado" class="label-negrito">Certificado de Autorização:</label>
+            <input type="text" id="certificado" name="certificado">
+
+            <label for="nome-responsavel" class="label-negrito">Nome do Responsável:</label>
+            <input type="text" id="nome-responsavel" name="nome-responsavel">
+            <label for="telefone-responsavel" class="label-negrito">Telefone do Responsável:</label>
+            <input type="text" id="telefone-responsavel" name="telefone-responsavel">
+            <label for="contato-comercial" class="label-negrito">Comercial Responsável:</label>
+            <input type="text" id="contato-comercial" name="contato-comercial">
+            <label for="link-4c" class="label-negrito">Link 4C:</label>
+            <input type="text" id="link-4c" name="link-4c">
+
+            <button type="button" id="btn-gerador">Gerar Modelos</button>
+        </form>
+    </div>
+</body>
+</html>
