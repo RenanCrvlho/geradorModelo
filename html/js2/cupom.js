@@ -68,7 +68,7 @@ window.onload = () => {
 
         const nomeShopping = document.getElementById('nome-shopping').value;
         const nomeCampanha = document.getElementById('nome-campanha').value;
-        const modalidadeCampanha = document.getElementById('modalidade-campanha').value;
+        const modalidadeCampanha = 'CUPOM';
 
         const opcaoTecnologiaSelecionada = [];
 
