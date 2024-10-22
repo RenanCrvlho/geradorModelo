@@ -108,7 +108,7 @@ window.onload = () => {
         const dataInicioPromoFormatada = formatarData(dataInicioPromo);
 
         const dataFimPromo = document.getElementById('data-fim-promo').value;
-        const dataFimPromoFormatada = dataFimPromo(dataFimPromo);
+        const dataFimPromoFormatada = formatarData(dataFimPromo);
 
         const dataHoraInicioPart = document.getElementById('data-hora-inicio-part').value;
         const dataHoraInicioPartFormatada = formatarDataHora(dataHoraInicioPart);
