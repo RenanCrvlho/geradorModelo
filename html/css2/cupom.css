@@ -70,3 +70,8 @@ button:hover {
     flex-direction: column;
     justify-content: space-between;
 }
+
+.observacao {
+    display: flex;
+    flex-direction: column;
+}

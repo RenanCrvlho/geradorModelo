@@ -56,6 +56,38 @@ window.onload = () => {
     btnSpa.addEventListener('click', adicionarSpa); 
 
     
+    function adicionarObs() {
+        const containerTrue = document.getElementById('container-obs');
+
+        if(containerTrue.classList.contains('ativo')) {
+            const novaDiv = document.createElement('div');
+            novaDiv.classList.add('observacao');
+
+            const novoLabelObs = document.createElement('label');
+            novoLabelObs.setAttribute('for', 'observacao');
+            novoLabelObs.setAttribute('style', 'color: red; font-size: 20px');
+            novoLabelObs.classList.add('label-negrito');
+            novoLabelObs.textContent = 'Observações da Campanha:';
+
+            containerTrue.classList.remove('ativo');
+
+            const novoInputObs = document.createElement('textarea');
+            novoInputObs.setAttribute('name', 'observacao');
+            novoInputObs.setAttribute('id', 'observacao');
+
+            novaDiv.appendChild(novoLabelObs);
+            novaDiv.appendChild(novoInputObs);
+
+            containerTrue.appendChild(novaDiv);
+        }
+        
+    }
+    
+    const btnObs = document.getElementById('btn-obs');
+
+    btnObs.addEventListener('click', adicionarObs);
+
+
 
     function gerarModelos(){
         const nomeShopping = document.getElementById('nome-shopping').value;
@@ -108,6 +140,36 @@ window.onload = () => {
         const dataHoraFimPartFormatada = formatarDataHora(dataHoraFimPart);
 
         const mecanica = document.getElementById('mecanica').value;
+
+        const containerObservacao = document.getElementById('container-obs');
+        const observacao = document.getElementById('observacao');
+        
+
+        function obsRedmine() {                
+            let colocarObs = '';
+            if(!containerObservacao.classList.contains('ativo')){
+                colocarObs = `<p>** ${observacao.value}.</p>`; 
+            } else {
+                colocarObs = '';
+            }
+
+            return colocarObs;
+        }
+
+        function obsLog() {
+            let colocarObs = '';
+            if(!containerObservacao.classList.contains('ativo')){
+                colocarObs = `${observacao.value}`;
+            } else {
+                colocarObs = '';
+            }
+
+            return colocarObs;
+        }
+
+        const observacaoAtivaRedmine = obsRedmine();
+        const observacaoAtivaLog = obsLog();
+
 
         const regraQtd = document.getElementById('regra-quantidade').value;
         const regraExtra = document.getElementById('regra-extra').value;
@@ -335,6 +397,9 @@ window.onload = () => {
             <p>* *Mecânica Geral:*</p>
             <p>** ${mecanica}.</p>
             <br></br>
+            <p>* *Observações:*</p>
+            ${observacaoAtivaRedmine}
+            <br></br>
             <p>* *Regras Quantidade - Regra de quantidade não soma saldo com outros valores para gerar bônus:*</p>
             <p>** ${regraQtd}.</p>
             <br></br>
@@ -399,6 +464,11 @@ window.onload = () => {
             <h3><strong>Mecânica Geral ${modalidadeCampanha}:</strong></h3>
             <ul>
                 <li>${mecanica}.</li>
+            </ul>
+            <br></br>
+            <h3><strong>Observações:</strong></h3>
+            <ul>
+                <li>${observacaoAtivaLog}</li>
             </ul>
             <br></br>
             <h3><strong>Regras de Quantidade:</strong></h3>
