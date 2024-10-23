@@ -2,6 +2,7 @@ window.onload = () => {
 
     let contadorLoteria = 0;
     let contadorSpa = 0;
+    let contadorRegra = 0;
 
     function adicionarSorteio(){
         contadorLoteria++;
@@ -86,6 +87,31 @@ window.onload = () => {
     const btnObs = document.getElementById('btn-obs');
 
     btnObs.addEventListener('click', adicionarObs);
+
+    function adicionarRegra() {
+        contadorRegra++;
+
+        const novaDiv = document.createElement('div');
+        novaDiv.classList.add('regra');
+
+        const novoLabelRegra = document.createElement('label');
+        novoLabelRegra.setAttribute('for', `regra-quantidade${contadorRegra}`);
+        novoLabelRegra.classList.add('label-negrito');
+        novoLabelRegra.textContent = `Regra de Quantidade:`;
+
+        const novoInputRegra = document.createElement('textarea');
+        novoInputRegra.setAttribute('name', `regra-quantidade${contadorRegra}`);
+        novoInputRegra.setAttribute('id', `regra-quantidade${contadorRegra}`);
+
+        novaDiv.appendChild(novoLabelRegra);
+        novaDiv.appendChild(novoInputRegra);
+
+        document.getElementById('container-regra').appendChild(novaDiv);
+    }
+
+    const btnRegra = document.getElementById('btn-regra');
+
+    btnRegra.addEventListener('click', adicionarRegra);
 
 
 
@@ -302,8 +328,12 @@ window.onload = () => {
             const dtaSorteio = document.querySelectorAll('input[name^="data-sorteio"]');
             const dtaSpa = document.querySelectorAll('input[name^="data-hora-relatorio"]');
 
+            const regrasQuantidade = document.querySelectorAll('textarea[name^="regra-quantidade"]');
+
             const listaDataSorteio = [];
             const listaDataSpa = [];
+
+            const listaRegraQtd = [];
 
             dtaSorteio.forEach(input => {
                 if (input.value.trim()) {
@@ -317,12 +347,18 @@ window.onload = () => {
                 }
             });  
 
+            regrasQuantidade.forEach(input => {
+                if (input.value.trim()) {
+                    listaRegraQtd.push(input.value);
+                }
+            });
+
             function loteriaSorteioRedmine() {
                 let listaDataLoteriaRedmine = '';
 
                 if(listaDataSorteio.length) {                
                     for (let i = 0; i < listaDataSorteio.length; i++) {
-                        listaDataLoteriaRedmine += `<li style="list-style: none;">** ${formatarData(listaDataSorteio[i])};</li>`;
+                        listaDataLoteriaRedmine += `<li style="list-style: none;">** ${formatarData(listaDataSorteio[i])}</li>`;
                     }
                 } else {
                     console.log('A lista está vazia!');
@@ -335,7 +371,7 @@ window.onload = () => {
 
                 if(listaDataSorteio.length) {                
                     for (let i = 0; i < listaDataSorteio.length; i++) {
-                        listaDataLoteriaLog += `<li>${formatarData(listaDataSorteio[i])};</li>`;
+                        listaDataLoteriaLog += `<li>${formatarData(listaDataSorteio[i])}</li>`;
                     }
                 } else {
                     console.log('A lista está vazia!');
@@ -350,7 +386,7 @@ window.onload = () => {
 
                 if(listaDataSpa.length) {
                     for (let i = 0; i < listaDataSpa.length; i++) {
-                        listaDataSpaRedmine += `<li style="list-style: none;">** ${formatarDataHora(listaDataSpa[i])};</li>`;
+                        listaDataSpaRedmine += `<li style="list-style: none;">** ${formatarDataHora(listaDataSpa[i])}</li>`;
                     }
                 } else {
                     console.log('A lista está vazia!');
@@ -364,7 +400,7 @@ window.onload = () => {
 
                 if(listaDataSpa.length) {
                     for (let i = 0; i < listaDataSpa.length; i++) {
-                        listaDataSpaLog += `<li>${formatarDataHora(listaDataSpa[i])};</li>`;
+                        listaDataSpaLog += `<li>${formatarDataHora(listaDataSpa[i])}</li>`;
                     }
                 } else {
                     console.log('A lista está vazia!');
@@ -373,80 +409,112 @@ window.onload = () => {
                 return listaDataSpaLog;
             }
 
+
+            function regraQuantidadeRedmine() {
+                let listaRegraQuantidadeRedmine = '';
+
+                if(listaRegraQtd.length) {
+                    for (let i = 0; i < listaRegraQtd.length; i++) {
+                        listaRegraQuantidadeRedmine += `<li style="list-style: none;">** ${listaRegraQtd[i]}</li>`;
+                    }
+                } else {
+                    console.log('A lista está vazia!');
+                }
+
+                return listaRegraQuantidadeRedmine;
+            }
+
+            function regraQuantidadeLog() {
+                let listaRegraQuantidadeLog = '';
+
+                if(listaRegraQtd.length) {
+                    for (let i = 0; i < listaRegraQtd.length; i++) {
+                        listaRegraQuantidadeLog += `<li>${listaRegraQtd[i]}</li>`;
+                    }
+                } else {
+                    console.log('A lista está vazia!');
+                }
+
+                return listaRegraQuantidadeLog;
+            }
+
             const dataSorteioRedmine = loteriaSorteioRedmine();
             const dataSorteioLog = loteriaSorteioLog();
 
             const dataRelatorioRedmine = relatorioSpaRedmine();
             const dataRelatorioLog = relatorioSpaLog();
 
+            const regraQtdRedmine = regraQuantidadeRedmine();
+            const regraQtdLog = regraQuantidadeLog();
+
 
         const modelo1 = `
             <h1>Modelo para o Redmine</h1>
-            <p>*${modalidadeCampanha}*</p>
+            <p style="margin: 0;">*${modalidadeCampanha}*</p>
             <br></br>
-            <p>*${nomeShopping} - ${nomeCampanha}</p>
-            <p>_Tipo: ${modalidadeCampanha} - / ${opcoesTecno} /*_</p>
+            <p style="margin: 0;">*${nomeShopping} - ${nomeCampanha}</p>
+            <p style="margin: 0;">_Tipo: ${modalidadeCampanha} - / ${opcoesTecno} /*_</p>
             <br></br>
-            <p>* *Período*</p>
-            <p>** PERÍODO DA PROMOÇÃO: ${dataInicioPromoFormatada} até o dia ${dataFimPromoFormatada}.</p>
-            <p>** PERÍODO DE PARTICIPAÇÃO: do dia ${dataHoraInicioPartFormatada} até o dia ${dataHoraFimPartFormatada}.</p>
+            <p style="margin: 0;">* *Período*</p>
+            <p style="margin: 0;">** PERÍODO DA PROMOÇÃO: ${dataInicioPromoFormatada} até o dia ${dataFimPromoFormatada}</p>
+            <p style="margin: 0;">** PERÍODO DE PARTICIPAÇÃO: do dia ${dataHoraInicioPartFormatada} até o dia ${dataHoraFimPartFormatada}</p>
             <br></br>
-            <p>* *Regra de participação:*</p>
-            <ul style="padding-left: 0; margin-left: 0;">${listaOpcoesRegraRedmine}</ul>
+            <p style="margin: 0;">* *Regra de participação:*</p>
+            <ul style="padding-left: 0; margin: 0;">${listaOpcoesRegraRedmine}</ul>
             <br></br>
-            <p>* *Mecânica Geral:*</p>
-            <p>** ${mecanica}.</p>
+            <p style="margin: 0;">* *Mecânica Geral:*</p>
+            <p style="margin: 0;">** ${mecanica}</p>
             <br></br>
-            <p>* *Observações:*</p>
+            <p style="margin: 0;">* *Observações:*</p>
             ${observacaoAtivaRedmine}
             <br></br>
-            <p>* *Regras Quantidade - Regra de quantidade não soma saldo com outros valores para gerar bônus:*</p>
-            <p>** ${regraQtd}.</p>
+            <p style="margin: 0;">* *Regras Quantidade - Regra de quantidade não soma saldo com outros valores para gerar bônus:*</p>
+            <ul style="padding-left: 0; margin: 0;">${regraQtdRedmine}</ul>
             <br></br>
-            <p>* *Regras Extra - Soma com o saldo comum da campanha para gerar bônus:*</p>
-            <p>** ${regraExtra}.</p>
+            <p style="margin: 0;">* *Regras Extra - Soma com o saldo comum da campanha para gerar bônus:*</p>
+            <p style="margin: 0;">** ${regraExtra}</p>
             <br></br>
-            <p>* *Limite de notas _(Exemplo: Apenas duas notas da mesma loja no mesmo dia por pessoa)_:*</p>
-            <p>** ${limiteQuiosque} comprovantes de compra emitidos pelas mesmas lojas e/ou quiosques participantes;</p>
-            <p>** ${limiteFast} comprovantes de compra emitidos pelos mesmos Fast-foods e/ou restaurantes participantes.</p>
+            <p style="margin: 0;">* *Limite de notas _(Exemplo: Apenas duas notas da mesma loja no mesmo dia por pessoa)_:*</p>
+            <p style="margin: 0;">** ${limiteQuiosque} comprovantes de compra emitidos pelas mesmas lojas e/ou quiosques participantes</p>
+            <p style="margin: 0;">** ${limiteFast} comprovantes de compra emitidos pelos mesmos Fast-foods e/ou restaurantes participantes</p>
             <br></br>
-            <p>* *Limite de Valor de nota _(Exemplo: Acima de 20 mil a nota vai para moderação)_:*</p>
-            <p>** Acima de R$${limiteValor},00</p>
+            <p style="margin: 0;">* *Limite de Valor de nota _(Exemplo: Acima de 20 mil a nota vai para moderação)_:*</p>
+            <p style="margin: 0;">** Acima de R$${limiteValor},00</p>
             <br></br>
-            <p>* *Quantidade de séries e números da sorte:*</p>
-            <p>** ${qtdSerie} séries;</p>
-            <p>** ${qtdNumero} números.</p>
+            <p style="margin: 0;">* *Quantidade de séries e números da sorte:*</p>
+            <p style="margin: 0;">** ${qtdSerie} séries</p>
+            <p style="margin: 0;">** ${qtdNumero} números</p>
             <br></br>
-            <p>* *Meio de entrada de notas:*</p>
+            <p style="margin: 0;">* *Meio de entrada de notas:*</p>
             <ul style="padding-left: 0; margin-left: 0;">${listaOpcoesTecnoRedmine}</ul> 
             <br></br>
-            <p>* *Dados obrigatórios:*</p>
+            <p style="margin: 0;">* *Dados obrigatórios:*</p>
             <ul style="padding-left: 0; margin-left: 0;">${listaOpcoesDadosRedmine}</ul> 
             <br></br>
-            <p>* *Enquete:*</p>
+            <p style="margin: 0;">* *Enquete:*</p>
             <ul style="padding-left: 0; margin-left: 0;">${listaOpcoesEnqueteRedmine}</ul>
             <br></br>
-            <p>* *Termos LGPD:*</p>
-            <p>** ${opcoesTermo}</p>
+            <p style="margin: 0;">* *Termos LGPD:*</p>
+            <p style="margin: 0;">** ${opcoesTermo}</p>
             <br></br>
-            <p>* *Data(s) do(s) sorteio(s):*</p>
+            <p style="margin: 0;">* *Data(s) do(s) sorteio(s):*</p>
             <ul style="padding-left: 0; margin-left: 0;">${dataSorteioRedmine}</ul>
             <br></br>
-            <p>* *Envio do relatório SPA:*</p>
+            <p style="margin: 0;">* *Envio do relatório SPA:*</p>
             <ul style="padding-left: 0; margin-left: 0;">${dataRelatorioRedmine}</ul>
             <br></br>
-            <p>* *Bebidas Alcoólicas:</p>
-            <p>** ${opcoesBebida}</p>
+            <p style="margin: 0;">* *Bebidas Alcoólicas:*</p>
+            <p style="margin: 0;">** ${opcoesBebida}</p>
             <br></br>
-            <p>*Certificado de Autorização SPA/MF Nº ${certificado}*</p>
+            <p style="margin: 0;">*Certificado de Autorização SPA/MF Nº ${certificado}*</p>
             <br></br>
-            <p>________________________________________________</p>
+            <p style="margin: 0;">________________________________________________</p>
             <br></br>
-            <p>*Contato*</p>
+            <p style="margin: 0;">*Contato*</p>
             <br></br>
-            <p>* *Responsável: ${nomeResponsavel} - ${telefoneResponsavel}*</p>
-            <p>* *Comercial: ${contatoComercial}*</p>
-            <p>* *Link 4C: ${link4C}*</p>
+            <p style="margin: 0;">* *Responsável: ${nomeResponsavel} - ${telefoneResponsavel}*</p>
+            <p style="margin: 0;">* *Comercial: ${contatoComercial}*</p>
+            <p style="margin: 0;">* *Link 4C: ${link4C}*</p>
         `;
 
         const modelo2 = `
@@ -454,8 +522,8 @@ window.onload = () => {
             <h2>${nomeShopping} - ${nomeCampanha} (${modalidadeCampanha})</h2>
             <h3><strong>Período:</strong></h3>
             <ul>
-                <li><strong>PERÍODO DA PROMOÇÃO: </strong>${dataInicioPromoFormatada} à ${dataFimPromoFormatada}.</li>
-                <li><strong>PERÍODO DE PARTICIPAÇÃO: </strong>do dia ${dataHoraFimPartFormatada} até o dia ${dataHoraFimPartFormatada}.</li>
+                <li><strong>PERÍODO DA PROMOÇÃO: </strong>${dataInicioPromoFormatada} à ${dataFimPromoFormatada}</li>
+                <li><strong>PERÍODO DE PARTICIPAÇÃO: </strong>do dia ${dataHoraFimPartFormatada} até o dia ${dataHoraFimPartFormatada}</li>
             </ul>
             <br></br>
             <h3><strong>Regra de participação:</strong></h3>
@@ -463,7 +531,7 @@ window.onload = () => {
             <br></br>
             <h3><strong>Mecânica Geral ${modalidadeCampanha}:</strong></h3>
             <ul>
-                <li>${mecanica}.</li>
+                <li>${mecanica}</li>
             </ul>
             <br></br>
             <h3><strong>Observações:</strong></h3>
@@ -472,58 +540,56 @@ window.onload = () => {
             </ul>
             <br></br>
             <h3><strong>Regras de Quantidade:</strong></h3>
-            <ul>
-                <li>${regraQtd}.</li>
-            </ul>
+            <ul>${regraQtdLog}</ul>
             <br></br>
             <h3><strong>Regras de Extra:</strong></h3>
             <ul>
-                <li>${regraExtra}.</li>
+                <li>${regraExtra}</li>
             </ul>
             <br></br>
             <h3><strong>Limite de notas:</strong></h3>
             <ul>
-                <li><strong>${limiteQuiosque}</strong> comprovantes de compra emitidos pelas mesmas lojas e/ou quiosques participantes;</li>
-                <li><strong>${limiteFast}</strong> comprovantes de compra emitidos pelos mesmos Fast-foods e/ou restaurantes participantes.</li>
+                <li><strong>${limiteQuiosque}</strong> comprovantes de compra emitidos pelas mesmas lojas e/ou quiosques participantes</li>
+                <li><strong>${limiteFast}</strong> comprovantes de compra emitidos pelos mesmos Fast-foods e/ou restaurantes participantes</li>
             </ul>
             <br></br>
-            <p><strong>Limite de Valor de Nota:</strong></p>
+            <h3><strong>Limite de Valor de Nota:</strong></h3>
             <ul>
                 <li>Acima de <strong>R$${limiteValor},00</strong></li>
             </ul>
             <br></br>
-            <p><strong>Quantidade de Séries e Números da Sorte:</strong></p>
+            <h3><strong>Quantidade de Séries e Números da Sorte:</strong></h3>
             <ul>
-                <li>${qtdSerie} séries;</li>
-                <li>${qtdNumero} números da sorte.</li>
+                <li>${qtdSerie} séries</li>
+                <li>${qtdNumero} números da sorte</li>
             </ul>
             <br></br>
-            <p><strong>Meio de Entrada de Notas:</strong></p>
+            <h3><strong>Meio de Entrada de Notas:</strong></h3>
             <ul>${listaOpcoesTecnoLog}</ul> 
             <br></br>
-            <p><strong>Dados Obrigatórios:</strong></p>
+            <h3><strong>Dados Obrigatórios:</strong></h3>
             <ul>${listaOpcoesDadosLog}</ul> 
             <br></br>
-            <p><strong>Enquete:</strong></p>
+            <h3><strong>Enquete:</strong></h3>
             <ul>${listaOpcoesEnqueteLog}</ul>
             <br></br>
-            <p><strong>Termos LGPD:</strong></p>
+            <h3><strong>Termos LGPD:</strong></h3>
             <ul>
                 <li>${opcoesTermo}</li>
             </ul>
             <br></br>
-            <p><strong>Data(s) do(s) sorteio(s):</strong></p>
+            <h3><strong>Data(s) do(s) sorteio(s):</strong></h3>
             <ul>${dataSorteioLog}</ul>
             <br></br>
-            <p><strong>Envio do relatório SPA:</strong></p>
+            <h3><strong>Envio do relatório SPA:</strong></h3>
             <ul>${dataRelatorioLog}</ul>
             <br></br>
-            <p><strong>Bebidas Alcoólicas:</strong></p>
+            <h3><strong>Bebidas Alcoólicas:</strong></h3>
             <ul>
                 <li>${opcoesBebida}</li>
             </ul>
             <br></br>
-            <p><strong>Certificado de Autorização SPA/MF Nº ${certificado}</strong></p>
+            <h3><strong>Certificado de Autorização SPA/MF Nº ${certificado}</strong></h3>
         `;
 
         const novaJanela = window.open('', '', 'width=1400, height=800');

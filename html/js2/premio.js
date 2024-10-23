@@ -1,6 +1,7 @@
 window.onload = () => {
     
         let contadorPremio = 0;
+        let contadorRegra = 0;
 
         function adicionarPremio(){
             contadorPremio++;
@@ -75,6 +76,32 @@ window.onload = () => {
         const btnObs = document.getElementById('btn-obs');
 
         btnObs.addEventListener('click', adicionarObs);
+
+
+        function adicionarRegra() {
+            contadorRegra++;
+    
+            const novaDiv = document.createElement('div');
+            novaDiv.classList.add('regra');
+    
+            const novoLabelRegra = document.createElement('label');
+            novoLabelRegra.setAttribute('for', `regra-quantidade${contadorRegra}`);
+            novoLabelRegra.classList.add('label-negrito');
+            novoLabelRegra.textContent = `Regra de Quantidade:`;
+    
+            const novoInputRegra = document.createElement('textarea');
+            novoInputRegra.setAttribute('name', `regra-quantidade${contadorRegra}`);
+            novoInputRegra.setAttribute('id', `regra-quantidade${contadorRegra}`);
+    
+            novaDiv.appendChild(novoLabelRegra);
+            novaDiv.appendChild(novoInputRegra);
+    
+            document.getElementById('container-regra').appendChild(novaDiv);
+        }
+    
+        const btnRegra = document.getElementById('btn-regra');
+    
+        btnRegra.addEventListener('click', adicionarRegra);
     
         function gerarModelos() { 
 
@@ -290,8 +317,12 @@ window.onload = () => {
             const qtdPremios = document.querySelectorAll('input[name^="qtd-premio"]');
             const premios = document.querySelectorAll('input[name^="nome-premio"]');
 
+            const regrasQuantidade = document.querySelectorAll('textarea[name^="regra-quantidade"]');
+
             const qtdValoresPremios = [];
             const valoresPremiosInput = [];
+
+            const listaRegraQtd = [];
 
             qtdPremios.forEach(input => {
                 if (input.value.trim()) {
@@ -305,12 +336,18 @@ window.onload = () => {
                 }
             });  
 
+            regrasQuantidade.forEach(input => {
+                if (input.value.trim()) {
+                    listaRegraQtd.push(input.value);
+                }
+            });
+
             function premioRedmine() {
                 let listaQtdPremioRedmine = '';
 
                 if(valoresPremiosInput.length === qtdValoresPremios.length) {                
                     for (let i = 0; i < valoresPremiosInput.length; i++) {
-                        listaQtdPremioRedmine += `<li style="list-style: none;">** ${qtdValoresPremios[i]} ${valoresPremiosInput[i]};</li>`;
+                        listaQtdPremioRedmine += `<li style="list-style: none;">** ${qtdValoresPremios[i]} ${valoresPremiosInput[i]}</li>`;
                     }
                 } else {
                     console.log('As listas têm tamanhos diferentes.')
@@ -324,7 +361,7 @@ window.onload = () => {
 
                 if(valoresPremiosInput.length === qtdValoresPremios.length) {                
                     for (let i = 0; i < valoresPremiosInput.length; i++) {
-                        listaQtdPremioLog += `<li>${qtdValoresPremios[i]} ${valoresPremiosInput[i]};</li>`
+                        listaQtdPremioLog += `<li>${qtdValoresPremios[i]} ${valoresPremiosInput[i]}</li>`
                     }
                 } else {
                     console.log('As listas têm tamanhos diferentes.')
@@ -333,73 +370,104 @@ window.onload = () => {
                 return listaQtdPremioLog;
             }
 
+            function regraQuantidadeRedmine() {
+                let listaRegraQuantidadeRedmine = '';
+
+                if(listaRegraQtd.length) {
+                    for (let i = 0; i < listaRegraQtd.length; i++) {
+                        listaRegraQuantidadeRedmine += `<li style="list-style: none;">** ${listaRegraQtd[i]}</li>`;
+                    }
+                } else {
+                    console.log('A lista está vazia!');
+                }
+
+                return listaRegraQuantidadeRedmine;
+            }
+
+            function regraQuantidadeLog() {
+                let listaRegraQuantidadeLog = '';
+
+                if(listaRegraQtd.length) {
+                    for (let i = 0; i < listaRegraQtd.length; i++) {
+                        listaRegraQuantidadeLog += `<li>${listaRegraQtd[i]}</li>`;
+                    }
+                } else {
+                    console.log('A lista está vazia!');
+                }
+
+                return listaRegraQuantidadeLog;
+            }
+
 
             const valoresPremiosRedmine = premioRedmine();
             const valoresPremioLog = premioLog();
+
+            const regraQtdRedmine = regraQuantidadeRedmine();
+            const regraQtdLog = regraQuantidadeLog();
     
             const modelo1 = `
                 <h1>Modelo para o Redmine</h1>
-                <p>*${modalidadeCampanha}*</p>
+                <p style="margin: 0;">*${modalidadeCampanha}*</p>
                 <br></br>
-                <p>*${nomeShopping} - ${nomeCampanha}</p>
-                <p>_Tipo: ${modalidadeCampanha} - / ${opcoesTecno} /*_</p>
+                <p style="margin: 0;">*${nomeShopping} - ${nomeCampanha}</p>
+                <p style="margin: 0;">_Tipo: ${modalidadeCampanha} - / ${opcoesTecno} /*_</p>
                 <br></br>
-                <p>* *Período*</p>
-                <p>** PERÍODO DA PROMOÇÃO: ${dataInicioPromoFormatada} até o dia ${dataFimPromoFormatada}.</p>
-                <p>** PERÍODO DE PARTICIPAÇÃO: do dia ${dataHoraInicioPartFormatada} até o dia ${dataHoraFimPartFormatada}.</p>
+                <p style="margin: 0;">* *Período*</p>
+                <p style="margin: 0;">** PERÍODO DA PROMOÇÃO: ${dataInicioPromoFormatada} até o dia ${dataFimPromoFormatada}</p>
+                <p style="margin: 0;">** PERÍODO DE PARTICIPAÇÃO: do dia ${dataHoraInicioPartFormatada} até o dia ${dataHoraFimPartFormatada}</p>
                 <br></br>
-                <p>* *Regra de participação:*</p>
-                <ul style="padding-left: 0; margin-left: 0;">${listaOpcoesRegraRedmine}</ul>
+                <p style="margin: 0;">* *Regra de participação:*</p>
+                <ul style="padding-left: 0; margin: 0;">${listaOpcoesRegraRedmine}</ul>
                 <br></br>
-                <p>* *Mecânica Geral:*</p>
-                <p>** ${mecanica}.</p>
+                <p style="margin: 0;">* *Mecânica Geral:*</p>
+                <p style="margin: 0;">** ${mecanica}</p>
                 <br></br>
-                <p>* *Observações:*</p>
+                <p style="margin: 0;">* *Observações:*</p>
                 ${observacaoAtivaRedmine}
                 <br></br>
-                <p>* *Regras Quantidade - Regra de quantidade não soma saldo com outros valores para gerar bônus:*</p>
-                <p>** ${regraQtd}.</p>
+                <p style="margin: 0;">* *Regras Quantidade - Regra de quantidade não soma saldo com outros valores para gerar bônus:*</p>
+                <ul style="padding-left: 0; margin: 0;">${regraQtdRedmine}</ul>
                 <br></br>
-                <p>* *Regras Extra - Soma com o saldo comum da campanha para gerar bônus:*</p>
-                <p>** ${regraExtra}.</p>
+                <p style="margin: 0;">* *Regras Extra - Soma com o saldo comum da campanha para gerar bônus:*</p>
+                <p style="margin: 0;">** ${regraExtra}</p>
                 <br></br>
-                <p>* *Limite de notas _(Exemplo: Apenas duas notas da mesma loja no mesmo dia por pessoa)_:*</p>
-                <p>** ${limiteQuiosque} comprovantes de compra emitidos pelas mesmas lojas e/ou quiosques participantes;</p>
-                <p>** ${limiteFast} comprovantes de compra emitidos pelos mesmos Fast-foods e/ou restaurantes participantes.</p>
+                <p style="margin: 0;">* *Limite de notas _(Exemplo: Apenas duas notas da mesma loja no mesmo dia por pessoa)_:*</p>
+                <p style="margin: 0;">** ${limiteQuiosque} comprovantes de compra emitidos pelas mesmas lojas e/ou quiosques participantes</p>
+                <p style="margin: 0;">** ${limiteFast} comprovantes de compra emitidos pelos mesmos Fast-foods e/ou restaurantes participantes</p>
                 <br></br>
-                <p>* *Limite de Valor de nota _(Exemplo: Acima de 20 mil a nota vai para moderação)_:*</p>
-                <p>** Acima de R$${limiteValor},00</p>
+                <p style="margin: 0;">* *Limite de Valor de nota _(Exemplo: Acima de 20 mil a nota vai para moderação)_:*</p>
+                <p style="margin: 0;">** Acima de R$${limiteValor},00</p>
                 <br></br>
-                <p>* *Estoque:*</p>
-                <p>** Serão distribuídos ${qtdEstoque} brindes.</p>
+                <p style="margin: 0;">* *Estoque:*</p>
+                <p style="margin: 0;">** Serão distribuídos ${qtdEstoque} brindes</p>
                 <br></br>
-                <p>* *Prêmio:*</p>
+                <p style="margin: 0;">* *Prêmio:*</p>
                 <ul style="padding-left: 0; margin-left: 0;">${valoresPremiosRedmine}</ul>
                 <br></br>
-                <p>* *Meio de entrada de notas:*</p>
+                <p style="margin: 0;">* *Meio de entrada de notas:*</p>
                 <ul style="padding-left: 0; margin-left: 0;">${listaOpcoesTecnoRedmine}</ul> 
                 <br></br>
-                <p>* *Dados obrigatórios:*</p>
+                <p style="margin: 0;">* *Dados obrigatórios:*</p>
                 <ul style="padding-left: 0; margin-left: 0;">${listaOpcoesDadosRedmine}</ul> 
                 <br></br>
-                <p>* *Enquete:*</p>
+                <p style="margin: 0;">* *Enquete:*</p>
                 <ul style="padding-left: 0; margin-left: 0;">${listaOpcoesEnqueteRedmine}</ul>
                 <br></br>
-                <p>* *Termos LGPD:*</p>
-                <p>** ${opcoesTermo}</p>
+                <p style="margin: 0;">* *Termos LGPD:*</p>
+                <p style="margin: 0;">** ${opcoesTermo}</p>
                 <br></br>
-                <p>* *Bebidas Alcoólicas:</p>
-                <p>** ${opcoesBebida}</p>
+                <p style="margin: 0;">* *Bebidas Alcoólicas:*</p>
+                <p style="margin: 0;">** ${opcoesBebida}</p>
                 <br></br>
-                <p>*Certificado de Autorização SPA/MF Nº ${certificado}*</p>
+                <p style="margin: 0;">*Certificado de Autorização SPA/MF Nº ${certificado}*</p>
                 <br></br>
-                <p>________________________________________________</p>
+                <p style="margin: 0;">________________________________________________</p>
                 <br></br>
-                <p>*Contato*</p>
+                <p style="margin: 0;">*Contato*</p>
                 <br></br>
-                <p>* *Responsável: ${nomeResponsavel} - ${telefoneResponsavel}*</p>
-                <p>* *Comercial: ${contatoComercial}*</p>
-                <p>* *Link 4C: ${link4C}*</p>
+                <p style="margin: 0;">* *Responsável: ${nomeResponsavel} - ${telefoneResponsavel}*</p>
+                <p style="margin: 0;">* *Comercial: ${contatoComercial}*</p>
+                <p style="margin: 0;">* *Link 4C: ${link4C}*</p>
             `;
         
             const modelo2 = `
@@ -407,8 +475,8 @@ window.onload = () => {
                 <h2>${nomeShopping} - ${nomeCampanha} (${modalidadeCampanha})</h2>
                 <h3><strong>Período:</strong></h3>
                 <ul>
-                    <li><strong>PERÍODO DA PROMOÇÃO: </strong>${dataInicioPromoFormatada} até o dia ${dataFimPromoFormatada}.</li>
-                    <li><strong>PERÍODO DE PARTICIPAÇÃO: </strong>do dia ${dataHoraInicioPartFormatada} até o dia ${dataHoraFimPartFormatada}.</li>
+                    <li><strong>PERÍODO DA PROMOÇÃO: </strong>${dataInicioPromoFormatada} até o dia ${dataFimPromoFormatada}</li>
+                    <li><strong>PERÍODO DE PARTICIPAÇÃO: </strong>do dia ${dataHoraInicioPartFormatada} até o dia ${dataHoraFimPartFormatada}</li>
                 </ul>
                 <br></br>
                 <h3><strong>Regra de participação:</strong></h3>
@@ -416,7 +484,7 @@ window.onload = () => {
                 <br></br>
                 <h3><strong>Mecânica Geral ${modalidadeCampanha}:</strong></h3>
                 <ul>
-                    <li>${mecanica}.</li>
+                    <li>${mecanica}</li>
                 </ul>
                 <br></br>
                 <h3><strong>Observações:</strong></h3>
@@ -425,9 +493,7 @@ window.onload = () => {
                 </ul>
                 <br></br>
                 <h3><strong>Regras de Quantidade:</strong></h3>
-                <ul>
-                    <li>${regraQtd}.</li>
-                </ul>
+                <ul>${regraQtdLog}</ul>
                 <br></br>
                 <h3><strong>Regras de Extra:</strong></h3>
                 <ul>
@@ -447,7 +513,7 @@ window.onload = () => {
                 <br></br>
                 <p><strong>Estoque:</strong></p>
                 <ul>
-                    <li>Serão distribuídos ${qtdEstoque} brindes.</li>
+                    <li>Serão distribuídos ${qtdEstoque} brindes</li>
                 </ul>
                 <br></br>
                 <p><strong>Prêmio:</strong></p>
