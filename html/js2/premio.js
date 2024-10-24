@@ -11,7 +11,7 @@ window.onload = () => {
 
     
             const novoLabelPremio = document.createElement('label');
-            novoLabelPremio.setAttribute('for', `premio${contadorPremio}`);
+            novoLabelPremio.setAttribute('for', `nome-premio${contadorPremio}`);
             novoLabelPremio.classList.add('label-negrito');
             novoLabelPremio.classList.add('label-premio');
             novoLabelPremio.textContent = 'Prêmio:';
@@ -33,11 +33,28 @@ window.onload = () => {
             novoInputQtd.setAttribute('name', 'qtd-premio');
             novoInputQtd.classList.add('qtd-premio');
 
+
+            const novoBotaoRemover = document.createElement('button');
+            novoBotaoRemover.setAttribute('type', 'button');
+            novoBotaoRemover.setAttribute('id', `btn-remover${contadorPremio}`);
+            
+            const iconButton = document.createElement('i');
+
+            iconButton.classList.add("fas", "fa-trash");
+
+            novoBotaoRemover.appendChild(iconButton);
+
+            novoBotaoRemover.addEventListener('click', function() {
+                novaDiv.remove();  // Remove a div correspondente
+            });
+
             novaDiv.appendChild(novoLabelPremio);
             novaDiv.appendChild(novoInputPremio);
 
             novaDiv.appendChild(novoLabelQtd);
             novaDiv.appendChild(novoInputQtd);
+
+            novaDiv.appendChild(novoBotaoRemover);
 
             document.getElementById('container-estoque').appendChild(novaDiv);
         }
